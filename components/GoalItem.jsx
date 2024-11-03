@@ -1,18 +1,21 @@
 import { Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native";
 
+
 function GoalItem({ goal, destroy }) {
-  return <View key={goal.id} style={styles.container}>
-    <Text style={styles.text}>{goal.text}</Text>
-    <Pressable
-      style={styles.button.container}
-      onPress={() => {
-        destroy(goal);
-      }}
-    >
-      <Text style={styles.button.text}>❌️</Text>
-    </Pressable>
-  </View>;
+  return (
+    <View key={goal.id} style={styles.container}>
+      <Text style={styles.text}>{goal.text}</Text>
+      <Pressable
+        style={styles.button.container}
+        onPress={() => {
+          destroy(goal);
+        }}
+      >
+        <Text style={styles.button.text}>❌️</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 export default GoalItem;
@@ -36,12 +39,14 @@ const styles = StyleSheet.create({
   button: {
     container: {
       flex: 1,
-      width: "auto",
-      padding: "2.5%",
-      borderRadius: 5,
-      backgroundColor: "#000",
-      borderColor:  "#FFF",
-      borderWidth: 2
+      width: 30,
+      aspectRatio: 1,
+      borderRadius: 30,
+      backgroundColor: "#FFF",
+      borderColor: "#F00",
+      borderWidth: 2,
+      justifyContent: "center",
+      alignItems: "center",
     },
     text: {
       color: "#FFF",

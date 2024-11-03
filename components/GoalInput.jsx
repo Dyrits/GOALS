@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, Modal, Button, Image } from "react-native";
 
-function GoalInput({ append }) {
+function GoalInput({ append, visible, setInvisible }) {
   const [goal, setGoal] = useState(String());
-  const [dark, setDark] = useState(true);
 
   function createGoal() {
     return {
@@ -17,28 +16,35 @@ function GoalInput({ append }) {
       const goal = createGoal();
       append(goal);
       setGoal(String());
-      setDark(previous => !previous);
-      setTimeout(() => {
-        setDark(previous => !previous);
-      }, 500);
+      setInvisible()
     }
   }
 
-  return <View style={styles.form.container}>
-    <TextInput
-      selectionColor={"#FFF"}
-      placeholderTextColor={"#DDD"}
-      style={styles.form.input}
-      placeholder={"Your course goal--"}
-      value={goal}
-      onChangeText={setGoal}
-    />
-    <Pressable style={styles.button.container(dark)} onPress={addGoal}>
-      <Text style={styles.button.text(dark)}>
-        {dark ? "Add [+]" : "Added!"}
-      </Text>
-    </Pressable>
-  </View>;
+  return (
+    <Modal visible={visible} animationType={"fade"}>
+      <View style={styles.form.container}>
+        <Image source={require("../assets/images/goal.png")} style={styles.form.image} />
+        <TextInput
+          selectionColor={"#FFF"}
+          placeholderTextColor={"#DDD"}
+          style={styles.form.input}
+          placeholder={"What do you want to do?"}
+          value={goal}
+          onChangeText={setGoal}
+        />
+        <View style={styles.buttons.container}>
+          <Button title={"Add [+]"} color={"#28A745"} onPress={addGoal} />
+          <Button title={"Clear"} color={"#007BFF"} onPress={() => {
+            setGoal(String());
+          }} />
+          <Button title={"Cancel"} color={"#F00"} onPress={() => {
+            setGoal(String());
+            setInvisible();
+          }} />
+        </View>
+      </View>
+    </Modal>
+  );
 }
 
 export default GoalInput;
@@ -46,36 +52,30 @@ export default GoalInput;
 const styles = StyleSheet.create({
   form: {
     container: {
-      width: "100%",
-      flexDirection: "row",
-      justifyContent: "space-around",
+      flex: 1,
+      justifyContent: "center",
       alignItems: "center",
       paddingVertical: "2.5%",
-      borderBottomWidth: 2,
-      borderColor: "#000"
+      gap: 5,
+      backgroundColor: "#000"
+    },
+    image: {
+      width: 100,
+      height: 100
     },
     input: {
-      flex: 3,
+      width: "90%",
       marginRight: "1.5%",
       padding: "2.5%",
       borderRadius: 5,
-      backgroundColor: "#000",
-      color: "#FFF"
+      backgroundColor: "#FFF",
+      color: "#000"
     }
   },
-  button: {
-    container: dark => ({
-      flex: 1,
-      width: "auto",
-      padding: "2.5%",
-      borderRadius: 5,
-      backgroundColor: dark ? "#000" : "#FFF",
-      borderColor: dark ? "#FFF" : "#000",
-      borderWidth: 2
-    }),
-    text: dark => ({
-      color: dark ? "#FFF" : "#000",
-      textAlign: "center"
-    })
+  buttons: {
+    container: {
+      flexDirection: "row-reverse",
+      gap: 5
+    }
   }
 });
