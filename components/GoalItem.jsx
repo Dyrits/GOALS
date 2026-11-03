@@ -7,12 +7,14 @@ function GoalItem({ goal, destroy }) {
     <View key={goal.id} style={styles.container}>
       <Text style={styles.text}>{goal.text}</Text>
       <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={`Delete ${goal.text}`}
         style={styles.button.container}
         onPress={() => {
           destroy(goal);
         }}
       >
-        <Text style={styles.button.text}>❌️</Text>
+        <Text style={styles.button.text}>×</Text>
       </Pressable>
     </View>
   );
@@ -49,7 +51,8 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     text: {
-      color: "#FFF",
+      color: "#F00",
+      fontSize: 22,
       textAlign: "center"
     }
   }
