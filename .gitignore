@@ -16,3 +16,6 @@ web-build/
 # Integrated Development Environments
 .idea/
 .vscode/
+
+# Local Expo export verification outputs
+dist-*/
